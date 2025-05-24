@@ -134,6 +134,28 @@ const handleClearSearch=()=>{
 
 }
 
+const updateIsPinned = async (noteData) => {
+    const noteId = noteData._id
+
+    try {
+      const res = await axios.put(
+        backend_url+"/api/note/update-note-pinned/" + noteId,
+        { isPinned: !noteData.isPinned },
+        { withCredentials: true }
+      )
+
+      if (res.data.success === false) {
+        toast.error(res.data.message)
+        console.log(res.data.message)
+        return
+      }
+
+      toast.success(res.data.message)
+      getAllNotes()
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
 
 
 
@@ -184,7 +206,7 @@ className='border w-[30%] max-md:w-[40%] max-sm:w-[75%] h-[135px] mb-4 rounded p
           isPinned={note.isPinned}
           onEdit={() => {handleEdit(note)}}
           onDelete={() => {deleteNote(note)}}
-          onPinNote={() => {}}
+          onPinNote={() => {updateIsPinned(note)}}
         />
         </motion.div>
       ))}

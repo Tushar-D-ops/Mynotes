@@ -155,9 +155,7 @@ mongoose.connect(process.env.MONGO_URI).then(()=>{
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({ origin:["https://mynotes-omega-six.vercel.app"],credentials:true}))
-app.options("*", cors({ origin: ["https://mynotes-omega-six.vercel.app"], credentials: true }));
-
+app.use(cors({ origin:["http://localhost:5173","https://mynotes-omega-six.vercel.app"],credentials:true}))
 app.use("/api/auth", authRouter)
 app.use("/api/note", authenticateToken,noteRouter)
 
